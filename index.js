@@ -30,8 +30,8 @@ function sendHttpRequest(method, url, data) {
   // return promise;
 
   return fetch(url, {
-    method: method,
-    body: data,
+    method: method /*by default it will take GET method only */,
+    body: data /* in case if we use formData then we dont have to tell it will automatically convert the data*/,
     // body: JSON.stringify(data),
     // headers: {
     //   'Content-Type': 'application/json',
@@ -48,6 +48,7 @@ function sendHttpRequest(method, url, data) {
       }
     })
     .catch((error) => {
+      /* it will go in catch() block only if we have network connectivety issues otherwise we have to handle it in then () block with if/else statemenet*/
       console.log(error);
       throw new Error('Something went wrong');
     });
@@ -80,7 +81,9 @@ async function createPost(title, content) {
     body: content,
     userId: userId,
   };
-  const fd = new FormData(form);
+  const fd = new FormData(
+    form
+  ); /* if we directly want to send data from the form ,it is mandotory to add name attribute in html file*/
   // fd.append('title', title);
   // fd.append('body', content);
   fd.append('userId', userId);
